@@ -1,3 +1,46 @@
-<canvas></canvas>
-<!-- Use index.js script -->
-<script src ="index.js"></script>
+<head>
+    <style>
+        /* asterisk(*) means this is applied to all elements in webpage */
+        *{
+            /* keeps padding from messing up overall width of element try to always havve this? */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <!-- Big red container div -->
+    <!-- inline block fits to the canvas not the browser window -->
+    <div style="position: relative; display: inline-block">
+        <!-- Smaller red container div -->
+        <!-- Flex makes it so that the timers and health bars are beside each other not on top -->
+        <!-- Align items only work with display flex (align items in this case vertically)-->
+        <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
+            <!-- Player Health -->
+            <!-- Uses display flex with subcontent justify content to have health move from left to right for player -->
+            <div style="position: relative; height: 30px; width: 100%; display: flex; justify-content: flex-end;">
+                <div style = "background-color: yellow; height: 30px; width: 100%;" ></div>
+                <div id = "playerHealth" style ="position: absolute; background: blue; top: 0; right: 0; bottom: 0; width: 100%;"></div>
+            </div>
+            <!-- Timer -->
+            <!-- Flex shrink makes it so that it does not shrink too display flex and keeps its size you set -->
+            <div id="timer" style="background-color: red; width: 100px; height: 100px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            10
+            </div>
+            <!-- Enemy Health -->
+            <div style="position: relative; height: 30px; width: 100%">
+                <div style = "background-color: yellow; height: 30px;" ></div>
+                <div id = "enemyHealth" style ="position: absolute; background: blue; top: 0; right: 0; bottom: 0; left: 0;"></div>
+            </div>
+            <div></div>
+        </div>
+        <!--Winner Choose-->
+        <div id = "displayText" style="position: absolute; color: white; align-items: center; justify-content: center; top: 0; right: 0; left: 0; bottom: 0; display: none;">Tie</div>
+        <canvas></canvas>
+    </div>
+    
+    <!-- Use index.js script -->
+    <script src="js/utils.js"></script>
+    <script src="js/classes.js"></script>
+    <script src ="index.js"></script>
+</body>
+<!-- Throw all style tags into CSS file laters -->
