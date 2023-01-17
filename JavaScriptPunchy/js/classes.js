@@ -1,17 +1,33 @@
 //Create Sprite
 class Sprite {
     //Pass these arguements as a group so I don't need to remember the order
-    constructor({position, imageSrc}) {
+    constructor({position, imageSrc, scale = 1, framesMax = 1}) {
         this.position = position;
         this.width = 50;
         this.height = 150;
         this.image = new Image();
         this.image.src = imageSrc;
+        //scaling of the sprites used to make shop a bit bigger
+        this.scale = scale
+        //number of frames in the image
+        this.framesMax = framesMax
         
     }
     //Sprite is drawn when method is called
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y);
+        c.drawImage(
+            //Starts cropping the sprite
+            this.image,
+            0,
+            0,
+            this.image.width / this.framesMax, //per frame (6 different frames)
+            this.image.height,
+            //end cropping partish
+            this.position.x, 
+            this.position.y,
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale
+        )
     }
     //Moves sprites around call this method!
     update() {
