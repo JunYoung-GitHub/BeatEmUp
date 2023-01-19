@@ -8,30 +8,47 @@ class Sprite {
         this.image = new Image();
         this.image.src = imageSrc;
         //scaling of the sprites used to make shop a bit bigger
-        this.scale = scale
+        this.scale = scale;
         //number of frames in the image
-        this.framesMax = framesMax
-        
+        this.framesMax = framesMax;
+        //to account for background image not shop
+        this.framesCurrent = 0;
+        //How many frames elapsed over the whole animation
+        this.framesElapsed = 0;
+        //How long to hold frame increase to slow down animation or decrease to speed up
+        this.framesHold = 5;
     }
     //Sprite is drawn when method is called
     draw() {
         c.drawImage(
             //Starts cropping the sprite
-            this.image,
-            0,
-            0,
-            this.image.width / this.framesMax, //per frame (6 different frames)
-            this.image.height,
+            this.image, //<- Image source
+            this.framesCurrent * (this.image.width / this.framesMax), //this will account for the background sprite as its framesCurrent will be 0 but not for other sprites //<- Image x coordinate to start clipping
+            0, //<- Image y coordinate to start clipping
+            this.image.width / this.framesMax, //per frame (6 different frames) //<- Image width
+            this.image.height, //<- Image height
             //end cropping partish
-            this.position.x, 
-            this.position.y,
-            (this.image.width / this.framesMax) * this.scale,
-            this.image.height * this.scale
+            this.position.x, //<- Image x coordinate to place on canvas
+            this.position.y, //<- Image y coordinate to place on canvas
+            (this.image.width / this.framesMax) * this.scale, //<- Image width to stretch or reduce image
+            this.image.height * this.scale //<- Image height to stretch or reduce image
         )
     }
     //Moves sprites around call this method!
     update() {
         this.draw();
+        //keeps track of how many frames have elapsed over the whole animation
+        this.framesElapsed++;
+        //Waits for framesElapsed is fully divisble by framesHold to move onto the next frame
+        if(this.framesElapsed % this.framesHold === 0) {
+            //This starts the sprite loop and when reaches max goes back to first frame
+            if(this.framesCurrent < this.framesMax - 1) {
+                this.framesCurrent++;
+            }
+            else {
+                this.framesCurrent = 0;
+            }
+        }
     }
 }
 
